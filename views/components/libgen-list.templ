@@ -1,0 +1,84 @@
+package components
+
+import (
+	"encoding/json"
+	"log"
+)
+
+type BookType struct {
+	ID        string
+	BookName  string
+	Extension string
+	Mirrors   []string
+	ImgUrl    string
+	Author    string
+}
+
+func getObj(params [][]string) string {
+	obj := make(map[string]string)
+
+	for _, param := range params {
+		obj[param[0]] = param[1]
+	}
+	jsonString, err := json.Marshal(obj)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return string(jsonString)
+}
+
+func getImgUrl(src string, baseUrl string) string {
+	if src != baseUrl+"-d.jpg" {
+		return baseUrl + "-d.jpg"
+	}
+	if src != baseUrl+"-g.jpg" {
+		return baseUrl + "-g.jpg"
+	}
+	return baseUrl + ".jpg"
+}
+
+templ LibgenList(books []BookType) {
+	<div>
+		<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" data-id="42">
+			for _, book := range books {
+				<div class="relative group" data-id="44">
+					<div class="flex flex-col items-center gap-2" data-id="46">
+						<img
+							data-id="47"
+							data-img={ book.ImgUrl }
+							src={ book.ImgUrl + ".jpg" }
+							alt="The Great Gatsby"
+							width="150"
+							height="200"
+							class="rounded-lg object-cover"
+							style="aspect-ratio: 150 / 200; object-fit: cover;"
+							onerror="const fallbacks = [this.dataset.img + '-d.jpg', this.dataset.img + '-g.jpg', 'https://library.lol/img/blank.png']
+
+if (typeof this.dataset.fallbackSrcIndex === 'undefined') this.dataset.fallbackSrcIndex = 0;
+this.src = fallbacks[this.dataset.fallbackSrcIndex++];"
+						/>
+						<h3 class="text-lg font-semibold" data-id="48">{ book.BookName }</h3>
+						<p class="text-muted-foreground" data-id="49">{ book.Author }</p>
+						<div class="flex items-center gap-2" data-id="50">
+							for _, mirror := range book.Mirrors {
+								@Mirror(mirror, book.Extension)
+							}
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+}
+
+templ Mirror(mirror string, extension string) {
+	<button
+		class="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md px-3 h-8 gap-1 text-sm"
+		hx-post="/download"
+		hx-vals={ getObj([][]string{{"mirror", mirror}, {"extension", extension}}) }
+		hx-encoding="multipart/form-data"
+		data-mirror={ mirror }
+	><svg data-id="55" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg><span data-id="56">{ extension }</span></button>
+}
