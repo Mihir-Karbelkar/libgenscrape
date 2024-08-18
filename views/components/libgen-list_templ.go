@@ -96,7 +96,7 @@ func LibgenList(books []BookType) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" alt=\"The Great Gatsby\" width=\"150\" height=\"200\" class=\"rounded-lg object-cover\" style=\"aspect-ratio: 150 / 200; object-fit: cover;\" onerror=\"const fallbacks = [this.dataset.img + &#39;-d.jpg&#39;, this.dataset.img + &#39;-g.jpg&#39;, &#39;https://library.lol/img/blank.png&#39;]\r\n\r\nif (typeof this.dataset.fallbackSrcIndex === &#39;undefined&#39;) this.dataset.fallbackSrcIndex = 0;\r\nthis.src = fallbacks[this.dataset.fallbackSrcIndex++];\"><h3 class=\"text-lg font-semibold\" data-id=\"48\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" alt=\"The Great Gatsby\" width=\"150\" height=\"200\" class=\"rounded-lg object-cover\" style=\"aspect-ratio: 150 / 200; object-fit: cover;\" onerror=\"const fallbacks = [this.dataset.img + &#39;-d.jpg&#39;, this.dataset.img + &#39;-g.jpg&#39;, &#39;https://library.lol/img/blank.png&#39;]\n\nif (typeof this.dataset.fallbackSrcIndex === &#39;undefined&#39;) this.dataset.fallbackSrcIndex = 0;\nthis.src = fallbacks[this.dataset.fallbackSrcIndex++];\"><h3 class=\"text-lg font-semibold\" data-id=\"48\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -127,7 +127,7 @@ func LibgenList(books []BookType) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			for _, mirror := range book.Mirrors {
-				templ_7745c5c3_Err = Mirror(mirror, book.Extension).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = Mirror(mirror, book.Extension, book.BookName).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -145,7 +145,7 @@ func LibgenList(books []BookType) templ.Component {
 	})
 }
 
-func Mirror(mirror string, extension string) templ.Component {
+func Mirror(mirror string, extension string, bookName string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -168,9 +168,9 @@ func Mirror(mirror string, extension string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(getObj([][]string{{"mirror", mirror}, {"extension", extension}}))
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(getObj([][]string{{"mirror", mirror}, {"extension", extension}, {"bookName", bookName}}))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/libgen-list.templ`, Line: 80, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/libgen-list.templ`, Line: 80, Col: 100}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -189,20 +189,46 @@ func Mirror(mirror string, extension string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><svg data-id=\"55\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"h-4 w-4\"><path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\"></path><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"></path></svg><span data-id=\"56\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#download-script\" hx-swap=\"outerHTML\"><svg data-id=\"55\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"h-4 w-4\"><path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\"></path><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"></path></svg><span data-id=\"56\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(extension)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/libgen-list.templ`, Line: 83, Col: 365}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/libgen-list.templ`, Line: 85, Col: 365}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></button>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return templ_7745c5c3_Err
+	})
+}
+
+func Download(downloadUrl string, fileName string) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var10 == nil {
+			templ_7745c5c3_Var10 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script id=\"download-script\">\n\t(function(){const a = document.createElement('a');\n    a.href = {{.downloadUrl}};\n    a.download = { {.fileName} } || 'download';\n    document.body.appendChild(a);\n    a.click();\n    document.body.removeChild(a);})()\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

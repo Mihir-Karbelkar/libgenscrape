@@ -56,10 +56,10 @@ func Download(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	r.ParseMultipartForm(0)
 	mirrorUrl := r.FormValue("mirror")
 	extension := r.FormValue("extension")
+	bookName := r.FormValue("bookName")
 	downloadUrl := GetDownloadUrl(mirrorUrl)
-	w.Header().Set("Hx-Redirect", downloadUrl)
 
-	component := components.Mirror(mirrorUrl, extension)
+	component := components.Download(downloadUrl, bookName+"."+extension)
 	component.Render(r.Context(), w)
 }
 

@@ -63,7 +63,7 @@ this.src = fallbacks[this.dataset.fallbackSrcIndex++];"
 						<p class="text-muted-foreground" data-id="49">{ book.Author }</p>
 						<div class="flex items-center gap-2" data-id="50">
 							for _, mirror := range book.Mirrors {
-								@Mirror(mirror, book.Extension)
+								@Mirror(mirror, book.Extension, book.BookName)
 							}
 						</div>
 					</div>
@@ -73,12 +73,25 @@ this.src = fallbacks[this.dataset.fallbackSrcIndex++];"
 	</div>
 }
 
-templ Mirror(mirror string, extension string) {
+templ Mirror(mirror string, extension string, bookName string) {
 	<button
 		class="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md px-3 h-8 gap-1 text-sm"
 		hx-post="/download"
-		hx-vals={ getObj([][]string{{"mirror", mirror}, {"extension", extension}}) }
+		hx-vals={ getObj([][]string{{"mirror", mirror}, {"extension", extension}, {"bookName", bookName}}) }
 		hx-encoding="multipart/form-data"
 		data-mirror={ mirror }
+		hx-target="#download-script"
+		hx-swap="outerHTML"
 	><svg data-id="55" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg><span data-id="56">{ extension }</span></button>
+}
+
+templ Download(downloadUrl string, fileName string) {
+	<script id="download-script">
+	(function(){const a = document.createElement('a');
+    a.href = {{.downloadUrl}};
+    a.download = { {.fileName} } || 'download';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);})()
+	</script>
 }
