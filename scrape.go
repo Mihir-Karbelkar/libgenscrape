@@ -107,7 +107,7 @@ func GetDownloadUrl(visitUrl string) string {
 		log.Info(err)
 	}
 	if website == "libgen.li" {
-		downloadUrl = "http://libgen.li/" + downloadUrl
+		downloadUrl = "https://libgen.li/" + downloadUrl
 	}
 	return strings.TrimSpace(downloadUrl)
 }

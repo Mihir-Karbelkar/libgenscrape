@@ -86,10 +86,12 @@ templ Mirror(mirror string, extension string, bookName string) {
 }
 
 templ Download(downloadUrl string, fileName string) {
+	<div id="file-data" data-filename={ fileName } data-downloadurl={ downloadUrl }></div>
 	<script id="download-script">
 	(function(){const a = document.createElement('a');
-    a.href = {{.downloadUrl}};
-    a.download = { {.fileName} } || 'download';
+	const fileData = document.getElementById('file-data')
+    a.href = fileData.dataset.downloadurl
+    a.download =  fileData.dataset.filename|| 'download';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);})()
