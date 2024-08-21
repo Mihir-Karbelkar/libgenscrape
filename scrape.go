@@ -24,7 +24,7 @@ func GetLists(query string) []components.BookType {
 		idCol := 0
 		// sizeCol := 0
 		extensionCol := 0
-		mirrorCol1 := 0
+		// mirrorCol1 := 0
 		mirrorCol2 := 0
 		titleCol := 0
 		e.ForEach("tr", func(rowNum int, row *colly.HTMLElement) {
@@ -41,7 +41,7 @@ func GetLists(query string) []components.BookType {
 					case "Extension":
 						extensionCol = colNum
 					case "Mirrors":
-						mirrorCol1 = colNum
+						// mirrorCol1 = colNum
 						mirrorCol2 = colNum + 1
 					case "Title":
 						titleCol = colNum
@@ -52,8 +52,8 @@ func GetLists(query string) []components.BookType {
 						book.ID = text
 					case extensionCol:
 						book.Extension = text
-					case mirrorCol1:
-						mirrors = append(mirrors, col.ChildAttr("a", "href"))
+					// case mirrorCol1:
+					// 	mirrors = append(mirrors, col.ChildAttr("a", "href"))
 					case mirrorCol2:
 						mirrors = append(mirrors, col.ChildAttr("a", "href"))
 					case titleCol:
