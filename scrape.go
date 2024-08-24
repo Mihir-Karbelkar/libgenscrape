@@ -16,7 +16,7 @@ func EncodeParam(s string) string {
 }
 func GetLists(query string) []components.BookType {
 	c := colly.NewCollector()
-	baseUrl := "https://libgen.is"
+	baseUrl := "https://libgen.li"
 	searchUrl := baseUrl + "/search.php?req=" + EncodeParam(query)
 	var books []components.BookType
 	c.OnHTML("table.c tbody", func(e *colly.HTMLElement) {
