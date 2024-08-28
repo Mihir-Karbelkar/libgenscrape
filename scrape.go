@@ -81,7 +81,14 @@ func GetLists(query string) []components.BookType {
 	})
 	err := c.Visit(searchUrl)
 	if err != nil {
-		log.Info(err)
+		log.Error(err)
+		baseUrl := "https://libgen.is"
+		searchUrl := baseUrl + "/search.php?req=" + EncodeParam(query)
+		err := c.Visit(searchUrl)
+
+		if err != nil {
+			log.Error(err)
+		}
 	}
 
 	return books
