@@ -82,7 +82,7 @@ func GetLists(query string) []components.BookType {
 	err := c.Visit(searchUrl)
 	if err != nil {
 		log.Error(err)
-		baseUrl := "https://libgen.is"
+		baseUrl = "https://libgen.is"
 		searchUrl := baseUrl + "/search.php?req=" + EncodeParam(query)
 		err := c.Visit(searchUrl)
 
@@ -102,7 +102,7 @@ func GetDownloadUrl(visitUrl string) string {
 
 	selector := "#download"
 
-	if website == "libgen.li" {
+	if website == "libgen.li" || website == "libgen.is" {
 		selector = "#main"
 	}
 
@@ -115,6 +115,9 @@ func GetDownloadUrl(visitUrl string) string {
 	}
 	if website == "libgen.li" {
 		downloadUrl = "https://libgen.li/" + downloadUrl
+	}
+	if website == "libgen.is" {
+		downloadUrl = "https://libgen.is/" + downloadUrl
 	}
 	return strings.TrimSpace(downloadUrl)
 }
